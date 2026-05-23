@@ -3,6 +3,15 @@ import { Button } from "@/components/ui/button";
 import { Link } from "wouter";
 import { ChevronRight } from "lucide-react";
 
+const SERVICES = [
+  { key: "personal", icon: "💰" },
+  { key: "real_estate", icon: "🏠" },
+  { key: "business", icon: "💼" },
+  { key: "auto", icon: "🚗" },
+  { key: "student", icon: "🎓" },
+  { key: "other", icon: "❓" },
+];
+
 export default function Home() {
   const { t } = useLanguage();
 
@@ -53,27 +62,23 @@ export default function Home() {
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {[
-              { key: "personal", icon: "💰" },
-              { key: "real_estate", icon: "🏠" },
-              { key: "business", icon: "💼" },
-              { key: "auto", icon: "🚗" },
-              { key: "student", icon: "🎓" },
-              { key: "other", icon: "❓" },
-            ].map((service) => (
-              <div
-                key={service.key}
-                className="p-8 border border-slate-200 rounded-xl hover:shadow-lg transition-all duration-300 hover:border-blue-300"
-              >
-                <div className="text-4xl mb-4">{service.icon}</div>
-                <h3 className="text-xl font-bold text-slate-900 mb-3">
-                  {t.services[service.key as keyof typeof t.services].title}
-                </h3>
-                <p className="text-slate-600 leading-relaxed">
-                  {t.services[service.key as keyof typeof t.services].description}
-                </p>
-              </div>
-            ))}
+            {SERVICES.map((service) => {
+              const serviceData = t.services[service.key as "personal" | "real_estate" | "business" | "auto" | "student" | "other"];
+              return (
+                <div
+                  key={service.key}
+                  className="p-8 border border-slate-200 rounded-xl hover:shadow-lg transition-all duration-300 hover:border-blue-300"
+                >
+                  <div className="text-4xl mb-4">{service.icon}</div>
+                  <h3 className="text-xl font-bold text-slate-900 mb-3">
+                    {serviceData.title}
+                  </h3>
+                  <p className="text-slate-600 leading-relaxed">
+                    {serviceData.description}
+                  </p>
+                </div>
+              );
+            })}
           </div>
         </div>
       </section>

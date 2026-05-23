@@ -1,4 +1,4 @@
-import { useLanguage } from "@/contexts/LanguageContext";
+import { useLanguage, type LanguageCode } from "@/contexts/LanguageContext";
 import { Button } from "@/components/ui/button";
 import { Link } from "wouter";
 import { Menu, X } from "lucide-react";
@@ -61,7 +61,7 @@ export default function Header() {
                 {Object.entries(LANGUAGES).map(([code, lang]) => (
                   <DropdownMenuItem
                     key={code}
-                    onClick={() => setLanguage(code as keyof typeof LANGUAGES)}
+                    onClick={() => setLanguage(code as LanguageCode)}
                     className="cursor-pointer"
                   >
                     <span className="mr-2">{lang.flag}</span>
