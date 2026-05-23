@@ -5,7 +5,8 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { toast } from "sonner";
-import { LOAN_TYPES, FORMSPREE_ID } from "@/const";
+
+const FORMSPREE_ID = "mjgzopzp";
 
 const COUNTRIES = [
   "Afghanistan", "Albania", "Algeria", "Andorra", "Angola", "Argentina", "Armenia", "Australia",
@@ -105,7 +106,7 @@ export default function Form() {
       formDataToSend.append("duration", `${formData.duration} ${formData.durationUnit}`);
       formDataToSend.append("reason", formData.reason);
 
-      const response = await fetch(`https://formspree.io/f/${FORMSPREE_ID}`, {
+      const response = await fetch(`https://formspree.io/f/mjgzopzp`, {
         method: "POST",
         body: formDataToSend,
       });

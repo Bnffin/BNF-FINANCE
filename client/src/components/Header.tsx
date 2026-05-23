@@ -21,11 +21,13 @@ export default function Header() {
         <div className="flex justify-between items-center h-20">
           {/* Logo */}
           <Link href="/">
-            <a className="flex items-center space-x-2 font-bold text-2xl text-slate-900 hover:text-blue-600 transition-colors">
-              <div className="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center text-white font-bold">
-                BNF
-              </div>
-              <span>{SITE_NAME}</span>
+            <a className="flex items-center space-x-3 font-bold text-2xl text-slate-900 hover:opacity-80 transition-opacity">
+              <img 
+                src="https://d2xsxph8kpxj0f.cloudfront.net/310519663674993046/RUbfAp2yeLoeVJzkDmZ4BZ/bnf-logo-gqmv35NpDn5DdWtKzb5dQe.webp" 
+                alt="BNF Finance Logo" 
+                className="w-12 h-12 object-contain"
+              />
+              <span className="hidden sm:inline">{SITE_NAME}</span>
             </a>
           </Link>
 
