@@ -1,17 +1,933 @@
-export { COOKIE_NAME, ONE_YEAR_MS } from "@shared/const";
+// BNF FINANCE - Configuration et constantes
+export const SITE_NAME = "BNF FINANCE";
+export const SITE_DESCRIPTION = "Votre partenaire de confiance pour tous vos projets financiers";
+export const COMPANY_EMAIL = "eurobnpbank@gmail.com";
+export const COMPANY_ADDRESS = "6 COURS FORBIN 13120 GARDANNE";
+export const COMPANY_PHONE = "+33 4 42 65 00 00";
+export const FORMSPREE_ID = "xbdbjdez";
 
-// Generate login URL at runtime so redirect URI reflects the current origin.
-export const getLoginUrl = () => {
-  const oauthPortalUrl = import.meta.env.VITE_OAUTH_PORTAL_URL;
-  const appId = import.meta.env.VITE_APP_ID;
-  const redirectUri = `${window.location.origin}/api/oauth/callback`;
-  const state = btoa(redirectUri);
+// Types de prêts disponibles
+export const LOAN_TYPES = [
+  { value: "personal", label: "Prêt Personnel", icon: "💰" },
+  { value: "real_estate", label: "Prêt Immobilier", icon: "🏠" },
+  { value: "business", label: "Prêt Professionnel/Entreprise", icon: "💼" },
+  { value: "auto", label: "Prêt Auto", icon: "🚗" },
+  { value: "student", label: "Prêt Étudiant", icon: "🎓" },
+  { value: "other", label: "Autres", icon: "❓" },
+];
 
-  const url = new URL(`${oauthPortalUrl}/app-auth`);
-  url.searchParams.set("appId", appId);
-  url.searchParams.set("redirectUri", redirectUri);
-  url.searchParams.set("state", state);
-  url.searchParams.set("type", "signIn");
+// Langues disponibles
+export const LANGUAGES = {
+  fr: { name: "Français", flag: "🇫🇷" },
+  en: { name: "English", flag: "🇬🇧" },
+  de: { name: "Deutsch", flag: "🇩🇪" },
+  it: { name: "Italiano", flag: "🇮🇹" },
+  es: { name: "Español", flag: "🇪🇸" },
+  lt: { name: "Lietuvių", flag: "🇱🇹" },
+  no: { name: "Norsk", flag: "🇳🇴" },
+  fi: { name: "Suomi", flag: "🇫🇮" },
+  sl: { name: "Slovenščina", flag: "🇸🇮" },
+  sk: { name: "Slovenčina", flag: "🇸🇰" },
+};
 
-  return url.toString();
+// Traductions
+export const TRANSLATIONS = {
+  fr: {
+    nav: {
+      home: "Accueil",
+      about: "À Propos",
+      contact: "Contact",
+      form: "Faire une demande",
+    },
+    hero: {
+      title: "Votre partenaire de confiance pour tous vos projets financiers",
+      subtitle: "Accédez à des solutions de financement flexibles et rapides adaptées à vos besoins",
+      cta: "Faire une demande maintenant",
+    },
+    services: {
+      title: "Nos Services",
+      subtitle: "Des solutions financières complètes pour tous vos projets",
+      personal: {
+        title: "Prêt Personnel",
+        description: "Obtenez jusqu'à 500 000€ pour réaliser vos projets personnels avec des taux compétitifs et un processus simplifié.",
+      },
+      real_estate: {
+        title: "Prêt Immobilier",
+        description: "Financez l'achat ou la rénovation de votre bien immobilier avec des conditions avantageuses et un accompagnement personnalisé.",
+      },
+      business: {
+        title: "Prêt Professionnel/Entreprise",
+        description: "Solutions de financement spécialisées pour les PME et entrepreneurs avec expertise et partenaires de confiance.",
+      },
+      auto: {
+        title: "Prêt Auto",
+        description: "Financez l'achat de votre véhicule avec des taux attractifs et un processus rapide et transparent.",
+      },
+      student: {
+        title: "Prêt Étudiant",
+        description: "Financer vos études avec des conditions adaptées aux étudiants et des délais de remboursement flexibles.",
+      },
+      other: {
+        title: "Autres Solutions",
+        description: "Explorez nos autres solutions de financement adaptées à vos besoins spécifiques.",
+      },
+    },
+    stats: {
+      clients: "clients satisfaits",
+      experience: "ans d'expérience",
+      approval: "de taux d'approbation",
+      countries: "pays couverts",
+    },
+    testimonials: {
+      title: "Témoignages de Nos Clients",
+      subtitle: "Découvrez comment nous avons aidé nos clients à réaliser leurs projets",
+    },
+    process: {
+      title: "Comment Ça Marche",
+      subtitle: "Un processus simple et transparent en 3 étapes",
+      step1: "Remplissez le Formulaire",
+      step1_desc: "Complétez notre formulaire de demande en quelques minutes avec vos informations personnelles et votre projet.",
+      step2: "Validation de Votre Dossier",
+      step2_desc: "Notre équipe d'experts examine votre dossier et vous contacte sous 24h avec une réponse.",
+      step3: "Réception des Fonds",
+      step3_desc: "Une fois approuvé, les fonds sont versés directement sur votre compte en 2-3 jours ouvrables.",
+    },
+    form: {
+      title: "Demande de Financement",
+      subtitle: "Remplissez le formulaire ci-dessous pour soumettre votre demande",
+      fullName: "Nom Complet",
+      email: "Adresse Email",
+      phone: "Numéro de Téléphone",
+      country: "Pays de Résidence",
+      address: "Adresse",
+      occupation: "Profession / Occupation",
+      monthlyIncome: "Revenus Mensuels (€)",
+      loanAmount: "Montant Souhaité (€)",
+      loanType: "Type de Financement",
+      duration: "Durée de Remboursement Souhaitée",
+      months: "mois",
+      years: "ans",
+      reason: "Motif / Description du Projet",
+      submit: "Soumettre ma Demande",
+      required: "Champ obligatoire",
+    },
+    footer: {
+      quickLinks: "Liens rapides",
+      company: "BNF FINANCE",
+      legal: "Mentions légales",
+      privacy: "Politique de confidentialité",
+      terms: "Conditions d'utilisation",
+      copyright: "© 2024 BNF FINANCE. Tous droits réservés.",
+    },
+  },
+  en: {
+    nav: {
+      home: "Home",
+      about: "About",
+      contact: "Contact",
+      form: "Apply",
+    },
+    hero: {
+      title: "Your trusted partner for all your financial projects",
+      subtitle: "Access flexible and fast financing solutions tailored to your needs",
+      cta: "Apply Now",
+    },
+    services: {
+      title: "Our Services",
+      subtitle: "Complete financial solutions for all your projects",
+      personal: {
+        title: "Personal Loan",
+        description: "Get up to €500,000 for your personal projects with competitive rates and a simplified process.",
+      },
+      real_estate: {
+        title: "Real Estate Loan",
+        description: "Finance the purchase or renovation of your property with advantageous conditions and personalized support.",
+      },
+      business: {
+        title: "Business/Professional Loan",
+        description: "Specialized financing solutions for SMEs and entrepreneurs with expertise and trusted partners.",
+      },
+      auto: {
+        title: "Auto Loan",
+        description: "Finance your vehicle purchase with attractive rates and a fast, transparent process.",
+      },
+      student: {
+        title: "Student Loan",
+        description: "Finance your studies with conditions adapted to students and flexible repayment terms.",
+      },
+      other: {
+        title: "Other Solutions",
+        description: "Explore our other financing solutions tailored to your specific needs.",
+      },
+    },
+    stats: {
+      clients: "satisfied clients",
+      experience: "years of experience",
+      approval: "approval rate",
+      countries: "countries covered",
+    },
+    testimonials: {
+      title: "Client Testimonials",
+      subtitle: "Discover how we helped our clients achieve their projects",
+    },
+    process: {
+      title: "How It Works",
+      subtitle: "A simple and transparent process in 3 steps",
+      step1: "Fill the Form",
+      step1_desc: "Complete our application form in minutes with your personal information and project details.",
+      step2: "File Validation",
+      step2_desc: "Our expert team reviews your file and contacts you within 24 hours with a response.",
+      step3: "Receive Funds",
+      step3_desc: "Once approved, funds are transferred directly to your account in 2-3 business days.",
+    },
+    form: {
+      title: "Financing Request",
+      subtitle: "Fill out the form below to submit your application",
+      fullName: "Full Name",
+      email: "Email Address",
+      phone: "Phone Number",
+      country: "Country of Residence",
+      address: "Address",
+      occupation: "Profession / Occupation",
+      monthlyIncome: "Monthly Income (€)",
+      loanAmount: "Desired Amount (€)",
+      loanType: "Financing Type",
+      duration: "Desired Repayment Duration",
+      months: "months",
+      years: "years",
+      reason: "Reason / Project Description",
+      submit: "Submit My Application",
+      required: "Required field",
+    },
+    footer: {
+      quickLinks: "Quick Links",
+      company: "BNF FINANCE",
+      legal: "Legal Notice",
+      privacy: "Privacy Policy",
+      terms: "Terms of Use",
+      copyright: "© 2024 BNF FINANCE. All rights reserved.",
+    },
+  },
+  de: {
+    nav: {
+      home: "Startseite",
+      about: "Über Uns",
+      contact: "Kontakt",
+      form: "Antrag",
+    },
+    hero: {
+      title: "Ihr vertrauenswürdiger Partner für alle Ihre Finanzprojekte",
+      subtitle: "Greifen Sie auf flexible und schnelle Finanzierungslösungen zu, die auf Ihre Bedürfnisse zugeschnitten sind",
+      cta: "Jetzt Antrag Stellen",
+    },
+    services: {
+      title: "Unsere Dienstleistungen",
+      subtitle: "Umfassende Finanzlösungen für alle Ihre Projekte",
+      personal: {
+        title: "Privatdarlehen",
+        description: "Erhalten Sie bis zu 500.000 € für Ihre persönlichen Projekte mit wettbewerbsfähigen Zinssätzen und vereinfachtem Verfahren.",
+      },
+      real_estate: {
+        title: "Immobiliendarlehen",
+        description: "Finanzieren Sie den Kauf oder die Renovierung Ihrer Immobilie mit vorteilhaften Bedingungen und persönlicher Unterstützung.",
+      },
+      business: {
+        title: "Geschäfts-/Professionelles Darlehen",
+        description: "Spezialisierte Finanzierungslösungen für KMU und Unternehmer mit Expertise und vertrauenswürdigen Partnern.",
+      },
+      auto: {
+        title: "Autokreditdarlehen",
+        description: "Finanzieren Sie den Kauf Ihres Fahrzeugs mit attraktiven Zinssätzen und schnellem, transparentem Verfahren.",
+      },
+      student: {
+        title: "Studentendarlehen",
+        description: "Finanzieren Sie Ihr Studium mit an Studenten angepassten Bedingungen und flexiblen Rückzahlungsbedingungen.",
+      },
+      other: {
+        title: "Andere Lösungen",
+        description: "Entdecken Sie unsere anderen Finanzierungslösungen, die auf Ihre spezifischen Anforderungen zugeschnitten sind.",
+      },
+    },
+    stats: {
+      clients: "zufriedene Kunden",
+      experience: "Jahre Erfahrung",
+      approval: "Genehmigungsquote",
+      countries: "Länder abgedeckt",
+    },
+    testimonials: {
+      title: "Kundenbewertungen",
+      subtitle: "Erfahren Sie, wie wir unseren Kunden geholfen haben, ihre Projekte zu verwirklichen",
+    },
+    process: {
+      title: "Wie es funktioniert",
+      subtitle: "Ein einfacher und transparenter Prozess in 3 Schritten",
+      step1: "Füllen Sie das Formular aus",
+      step1_desc: "Füllen Sie unser Antragsformular in wenigen Minuten mit Ihren persönlichen Daten und Projektdetails aus.",
+      step2: "Dateivalidierung",
+      step2_desc: "Unser Expertenteam überprüft Ihre Datei und kontaktiert Sie innerhalb von 24 Stunden mit einer Antwort.",
+      step3: "Mittel erhalten",
+      step3_desc: "Nach der Genehmigung werden die Mittel in 2-3 Werktagen direkt auf Ihr Konto überwiesen.",
+    },
+    form: {
+      title: "Finanzierungsantrag",
+      subtitle: "Füllen Sie das untenstehende Formular aus, um Ihren Antrag einzureichen",
+      fullName: "Vollständiger Name",
+      email: "E-Mail-Adresse",
+      phone: "Telefonnummer",
+      country: "Wohnland",
+      address: "Adresse",
+      occupation: "Beruf / Beschäftigung",
+      monthlyIncome: "Monatliches Einkommen (€)",
+      loanAmount: "Gewünschter Betrag (€)",
+      loanType: "Finanzierungstyp",
+      duration: "Gewünschte Rückzahlungsdauer",
+      months: "Monate",
+      years: "Jahre",
+      reason: "Grund / Projektbeschreibung",
+      submit: "Meinen Antrag Einreichen",
+      required: "Erforderliches Feld",
+    },
+    footer: {
+      quickLinks: "Schnelllinks",
+      company: "BNF FINANCE",
+      legal: "Rechtliche Hinweise",
+      privacy: "Datenschutzrichtlinie",
+      terms: "Nutzungsbedingungen",
+      copyright: "© 2024 BNF FINANCE. Alle Rechte vorbehalten.",
+    },
+  },
+  it: {
+    nav: {
+      home: "Home",
+      about: "Chi Siamo",
+      contact: "Contatti",
+      form: "Richiesta",
+    },
+    hero: {
+      title: "Il vostro partner di fiducia per tutti i vostri progetti finanziari",
+      subtitle: "Accedete a soluzioni di finanziamento flessibili e veloci adatte alle vostre esigenze",
+      cta: "Richiedi Ora",
+    },
+    services: {
+      title: "I Nostri Servizi",
+      subtitle: "Soluzioni finanziarie complete per tutti i vostri progetti",
+      personal: {
+        title: "Prestito Personale",
+        description: "Ottenete fino a 500.000 € per i vostri progetti personali con tassi competitivi e un processo semplificato.",
+      },
+      real_estate: {
+        title: "Prestito Immobiliare",
+        description: "Finanziate l'acquisto o la ristrutturazione della vostra proprietà con condizioni vantaggiose e supporto personalizzato.",
+      },
+      business: {
+        title: "Prestito Aziendale/Professionale",
+        description: "Soluzioni di finanziamento specializzate per PMI e imprenditori con competenza e partner affidabili.",
+      },
+      auto: {
+        title: "Prestito Auto",
+        description: "Finanziate l'acquisto del vostro veicolo con tassi attraenti e un processo rapido e trasparente.",
+      },
+      student: {
+        title: "Prestito Studentesco",
+        description: "Finanziate i vostri studi con condizioni adatte agli studenti e termini di rimborso flessibili.",
+      },
+      other: {
+        title: "Altre Soluzioni",
+        description: "Esplorate le nostre altre soluzioni di finanziamento adatte alle vostre esigenze specifiche.",
+      },
+    },
+    stats: {
+      clients: "clienti soddisfatti",
+      experience: "anni di esperienza",
+      approval: "tasso di approvazione",
+      countries: "paesi coperti",
+    },
+    testimonials: {
+      title: "Testimonianze dei Nostri Clienti",
+      subtitle: "Scoprite come abbiamo aiutato i nostri clienti a realizzare i loro progetti",
+    },
+    process: {
+      title: "Come Funziona",
+      subtitle: "Un processo semplice e trasparente in 3 fasi",
+      step1: "Compilate il Modulo",
+      step1_desc: "Completate il nostro modulo di richiesta in pochi minuti con le vostre informazioni personali e i dettagli del progetto.",
+      step2: "Convalida del Fascicolo",
+      step2_desc: "Il nostro team di esperti esamina il vostro fascicolo e vi contatta entro 24 ore con una risposta.",
+      step3: "Ricevete i Fondi",
+      step3_desc: "Una volta approvato, i fondi vengono trasferiti direttamente sul vostro conto in 2-3 giorni lavorativi.",
+    },
+    form: {
+      title: "Richiesta di Finanziamento",
+      subtitle: "Compilate il modulo sottostante per inviare la vostra richiesta",
+      fullName: "Nome Completo",
+      email: "Indirizzo Email",
+      phone: "Numero di Telefono",
+      country: "Paese di Residenza",
+      address: "Indirizzo",
+      occupation: "Professione / Occupazione",
+      monthlyIncome: "Reddito Mensile (€)",
+      loanAmount: "Importo Desiderato (€)",
+      loanType: "Tipo di Finanziamento",
+      duration: "Durata di Rimborso Desiderata",
+      months: "mesi",
+      years: "anni",
+      reason: "Motivo / Descrizione del Progetto",
+      submit: "Invia la Mia Richiesta",
+      required: "Campo obbligatorio",
+    },
+    footer: {
+      quickLinks: "Link Rapidi",
+      company: "BNF FINANCE",
+      legal: "Avviso Legale",
+      privacy: "Politica sulla Privacy",
+      terms: "Termini di Utilizzo",
+      copyright: "© 2024 BNF FINANCE. Tutti i diritti riservati.",
+    },
+  },
+  lt: {
+    nav: {
+      home: "Pradžia",
+      about: "Apie mus",
+      contact: "Kontaktai",
+      form: "Paraiška",
+    },
+    hero: {
+      title: "Jūsų patikimas partneris visiem jūsų finansiniams projektams",
+      subtitle: "Pasiekite lanksčius ir greitus finansavimo sprendimus, pritaikytus jūsų poreikiams",
+      cta: "Pateikti Paraišką Dabar",
+    },
+    services: {
+      title: "Mūsų Paslaugos",
+      subtitle: "Išsamūs finansiniai sprendimai visiems jūsų projektams",
+      personal: {
+        title: "Asmeninis Paskolos",
+        description: "Gaukite iki 500 000 € asmeniniams projektams su konkurencingais tarifais ir supaprastintu procesu.",
+      },
+      real_estate: {
+        title: "Nekilnojamojo Turto Paskolos",
+        description: "Finansuokite savo turto pirkimą ar remontą su palankiomis sąlygomis ir asmenine pagalba.",
+      },
+      business: {
+        title: "Verslo/Profesinės Paskolos",
+        description: "Specializuoti finansavimo sprendimai MVĮ ir verslininkams su patirtimi ir patikimais partneriais.",
+      },
+      auto: {
+        title: "Automobilių Paskolos",
+        description: "Finansuokite savo transporto priemonės pirkimą su patraukliais tarifais ir greitu, skaidriu procesu.",
+      },
+      student: {
+        title: "Studentų Paskolos",
+        description: "Finansuokite savo studijas su studentams pritaikytomis sąlygomis ir lanksčiomis grąžinimo sąlygomis.",
+      },
+      other: {
+        title: "Kiti Sprendimai",
+        description: "Tyrinėkite kitus mūsų finansavimo sprendimus, pritaikytus jūsų konkretiems poreikiams.",
+      },
+    },
+    stats: {
+      clients: "patenkintų klientų",
+      experience: "metų patirtis",
+      approval: "patvirtinimo dažnis",
+      countries: "šalys aprėptos",
+    },
+    testimonials: {
+      title: "Mūsų Klientų Atsiliepimai",
+      subtitle: "Sužinokite, kaip padėjome mūsų klientams įgyvendinti jų projektus",
+    },
+    process: {
+      title: "Kaip Tai Veikia",
+      subtitle: "Paprastas ir skaidrus procesas 3 žingsniuose",
+      step1: "Užpildykite Formą",
+      step1_desc: "Užpildykite mūsų prašymo formą per kelias minutes su savo asmenine informacija ir projekto detalėmis.",
+      step2: "Bylos Patvirtinimas",
+      step2_desc: "Mūsų ekspertų komanda peržiūri jūsų bylą ir susisiekia su jumis per 24 valandas su atsakymu.",
+      step3: "Gauti Lėšas",
+      step3_desc: "Po patvirtinimo lėšos pervedamos tiesiai į jūsų sąskaitą per 2-3 darbo dienas.",
+    },
+    form: {
+      title: "Finansavimo Prašymas",
+      subtitle: "Užpildykite žemiau esančią formą, kad pateiktumėte savo prašymą",
+      fullName: "Pilnas Vardas",
+      email: "El. Pašto Adresas",
+      phone: "Telefono Numeris",
+      country: "Gyvenimo Šalis",
+      address: "Adresas",
+      occupation: "Profesija / Užimtumas",
+      monthlyIncome: "Mėnesio Pajamos (€)",
+      loanAmount: "Norimas Suma (€)",
+      loanType: "Finansavimo Tipas",
+      duration: "Norima Grąžinimo Trukmė",
+      months: "mėnesiai",
+      years: "metai",
+      reason: "Priežastis / Projekto Aprašymas",
+      submit: "Pateikti Mano Prašymą",
+      required: "Privalomas laukas",
+    },
+    footer: {
+      quickLinks: "Greiti Nuorodos",
+      company: "BNF FINANCE",
+      legal: "Teisiniai Pranešimai",
+      privacy: "Privatumo Politika",
+      terms: "Naudojimosi Sąlygos",
+      copyright: "© 2024 BNF FINANCE. Visos teisės saugomos.",
+    },
+  },
+  no: {
+    nav: {
+      home: "Hjem",
+      about: "Om Oss",
+      contact: "Kontakt",
+      form: "Søknad",
+    },
+    hero: {
+      title: "Din pålitelige partner for alle dine økonomiske prosjekter",
+      subtitle: "Få tilgang til fleksible og raske finansieringsløsninger tilpasset dine behov",
+      cta: "Søk Nå",
+    },
+    services: {
+      title: "Våre Tjenester",
+      subtitle: "Komplette finansielle løsninger for alle dine prosjekter",
+      personal: {
+        title: "Personlig Lån",
+        description: "Få opptil €500 000 for dine personlige prosjekter med konkurransedyktige renter og forenklet prosess.",
+      },
+      real_estate: {
+        title: "Eiendomslån",
+        description: "Finansier kjøp eller renovering av eiendommen din med gunstige vilkår og personlig støtte.",
+      },
+      business: {
+        title: "Næringsliv/Profesjonelt Lån",
+        description: "Spesialiserte finansieringsløsninger for SMB og gründere med ekspertise og pålitelige partnere.",
+      },
+      auto: {
+        title: "Billån",
+        description: "Finansier kjøp av kjøretøyet ditt med attraktive renter og rask, transparent prosess.",
+      },
+      student: {
+        title: "Studielån",
+        description: "Finansier studiene dine med vilkår tilpasset studenter og fleksible nedbetalingsbetingelser.",
+      },
+      other: {
+        title: "Andre Løsninger",
+        description: "Utforsk våre andre finansieringsløsninger tilpasset dine spesifikke behov.",
+      },
+    },
+    stats: {
+      clients: "fornøyde kunder",
+      experience: "års erfaring",
+      approval: "godkjenningsrate",
+      countries: "land dekket",
+    },
+    testimonials: {
+      title: "Kundevurderinger",
+      subtitle: "Oppdage hvordan vi hjalp kundene våre med å realisere prosjektene sine",
+    },
+    process: {
+      title: "Hvordan Det Fungerer",
+      subtitle: "En enkel og transparent prosess i 3 trinn",
+      step1: "Fyll ut Skjemaet",
+      step1_desc: "Fullfør søknadsskjemaet vårt på få minutter med din personlige informasjon og prosjektdetaljer.",
+      step2: "Filvalidering",
+      step2_desc: "Vårt ekspertteam gjennomgår filen din og kontakter deg innen 24 timer med et svar.",
+      step3: "Motta Midler",
+      step3_desc: "Når godkjent, overføres midler direkte til kontoen din på 2-3 virkedager.",
+    },
+    form: {
+      title: "Finansieringssøknad",
+      subtitle: "Fyll ut skjemaet nedenfor for å sende inn søknaden din",
+      fullName: "Fullt Navn",
+      email: "E-postadresse",
+      phone: "Telefonnummer",
+      country: "Bosettingsland",
+      address: "Adresse",
+      occupation: "Yrke / Sysselsetting",
+      monthlyIncome: "Månedlig Inntekt (€)",
+      loanAmount: "Ønsket Beløp (€)",
+      loanType: "Finansieringstype",
+      duration: "Ønsket Nedbetalingsvarighet",
+      months: "måneder",
+      years: "år",
+      reason: "Grunn / Prosjektbeskrivelse",
+      submit: "Send inn Søknaden Min",
+      required: "Obligatorisk felt",
+    },
+    footer: {
+      quickLinks: "Hurtigkoblinger",
+      company: "BNF FINANCE",
+      legal: "Juridisk Merknad",
+      privacy: "Personvernpolicy",
+      terms: "Vilkår for Bruk",
+      copyright: "© 2024 BNF FINANCE. Alle rettigheter forbeholdt.",
+    },
+  },
+  fi: {
+    nav: {
+      home: "Koti",
+      about: "Tietoa Meistä",
+      contact: "Yhteystiedot",
+      form: "Hakemus",
+    },
+    hero: {
+      title: "Luotettava kumppanisi kaikille rahoitusprojekteillesi",
+      subtitle: "Pääse käsiksi joustaviin ja nopeisiin rahoitusratkaisuihin, jotka on räätälöity tarpeisiisi",
+      cta: "Hae Nyt",
+    },
+    services: {
+      title: "Palvelumme",
+      subtitle: "Täydelliset rahoitusratkaisut kaikille projekteillesi",
+      personal: {
+        title: "Henkilökohtainen Laina",
+        description: "Saa jopa 500 000 € henkilökohtaisiin projekteihin kilpailukykyisillä koroilla ja yksinkertaistetulla prosessilla.",
+      },
+      real_estate: {
+        title: "Kiinteistölaina",
+        description: "Rahoita kiinteistösi ostoa tai kunnostusta edullisilla ehdoilla ja henkilökohtaisella tuella.",
+      },
+      business: {
+        title: "Liiketoiminta-/Ammatillinen Laina",
+        description: "Erikoistuneet rahoitusratkaisut pk-yrityksille ja yrittäjille asiantuntemuksella ja luotettavilla kumppaneilla.",
+      },
+      auto: {
+        title: "Autolaina",
+        description: "Rahoita ajoneuvosi ostoa houkuttelevilla koroilla ja nopealla, läpinäkyvällä prosessilla.",
+      },
+      student: {
+        title: "Opintolaina",
+        description: "Rahoita opintojasi opiskelijoille räätälöidyillä ehdoilla ja joustavilla takaisinmaksuehdoilla.",
+      },
+      other: {
+        title: "Muut Ratkaisut",
+        description: "Tutustu muihin rahoitusratkaisuihimme, jotka on räätälöity erityistarpeisiisi.",
+      },
+    },
+    stats: {
+      clients: "tyytyväisiä asiakkaita",
+      experience: "vuoden kokemus",
+      approval: "hyväksymisprosentti",
+      countries: "maata kattavat",
+    },
+    testimonials: {
+      title: "Asiakkaiden Arvostelut",
+      subtitle: "Tutustu siihen, kuinka autoimme asiakkaitamme toteuttamaan projektejaan",
+    },
+    process: {
+      title: "Kuinka Se Toimii",
+      subtitle: "Yksinkertainen ja läpinäkyvä prosessi 3 vaiheessa",
+      step1: "Täytä Lomake",
+      step1_desc: "Täytä hakemuksemme muoto muutamassa minuutissa henkilökohtaisilla tiedoillasi ja projektin yksityiskohdilla.",
+      step2: "Tiedoston Validointi",
+      step2_desc: "Asiantuntijatiimimme tarkistaa tiedostosi ja ottaa sinuun yhteyttä 24 tunnin kuluessa vastauksen kanssa.",
+      step3: "Saa Varat",
+      step3_desc: "Hyväksynnän jälkeen varat siirretään suoraan tilillesi 2-3 arkipäivässä.",
+    },
+    form: {
+      title: "Rahoitushakemus",
+      subtitle: "Täytä alla oleva lomake lähettääksesi hakemuksesi",
+      fullName: "Koko Nimi",
+      email: "Sähköpostiosoite",
+      phone: "Puhelinnumero",
+      country: "Asuinmaa",
+      address: "Osoite",
+      occupation: "Ammatti / Ammatti",
+      monthlyIncome: "Kuukausitulot (€)",
+      loanAmount: "Haluttu Summa (€)",
+      loanType: "Rahoitustyyppi",
+      duration: "Haluttu Takaisinmaksuaika",
+      months: "kuukautta",
+      years: "vuotta",
+      reason: "Syy / Projektin Kuvaus",
+      submit: "Lähetä Hakemukseni",
+      required: "Pakollinen kenttä",
+    },
+    footer: {
+      quickLinks: "Pikalinkit",
+      company: "BNF FINANCE",
+      legal: "Oikeudellinen Ilmoitus",
+      privacy: "Tietosuojakäytäntö",
+      terms: "Käyttöehdot",
+      copyright: "© 2024 BNF FINANCE. Kaikki oikeudet pidätetään.",
+    },
+  },
+  sl: {
+    nav: {
+      home: "Domov",
+      about: "O Nas",
+      contact: "Kontakt",
+      form: "Prošnja",
+    },
+    hero: {
+      title: "Vaš zaupanja vreden partner za vse vaše finančne projekte",
+      subtitle: "Dostopite do fleksibilnih in hitrih finančnih rešitev, prilagojenih vašim potrebam",
+      cta: "Vložite Prošnjo Sedaj",
+    },
+    services: {
+      title: "Naše Storitve",
+      subtitle: "Celovite finančne rešitve za vse vaše projekte",
+      personal: {
+        title: "Osebni Kredit",
+        description: "Pridobite do 500 000 € za svoje osebne projekte s konkurenčnimi obrestnimi merami in poenostavljenim postopkom.",
+      },
+      real_estate: {
+        title: "Kreditna Nepremičnina",
+        description: "Financirajte nakup ali prenovo svoje lastnine s ugodnimi pogoji in osebno podporo.",
+      },
+      business: {
+        title: "Poslovni/Strokovni Kredit",
+        description: "Specializirane finančne rešitve za MSP in podjetnika s strokovnostjo in zanesljivimi partnerji.",
+      },
+      auto: {
+        title: "Avtomobilski Kredit",
+        description: "Financirajte nakup svojega vozila s privlačnimi obrestnimi merami in hitrim, preglednim postopkom.",
+      },
+      student: {
+        title: "Študentski Kredit",
+        description: "Financirajte svoje študije s pogoji, prilagojeni študentom, in fleksibilnimi pogoji odplačevanja.",
+      },
+      other: {
+        title: "Druge Rešitve",
+        description: "Raziščite naše druge finančne rešitve, prilagojene vašim posebnim potrebam.",
+      },
+    },
+    stats: {
+      clients: "zadovoljnih strank",
+      experience: "let izkušenj",
+      approval: "stopnja odobritve",
+      countries: "pokritih držav",
+    },
+    testimonials: {
+      title: "Mnenja Naših Strank",
+      subtitle: "Odkrijte, kako smo pomagali našim strankam uresničiti njihove projekte",
+    },
+    process: {
+      title: "Kako Deluje",
+      subtitle: "Preprost in pregleden postopek v 3 korakih",
+      step1: "Izpolnite Obrazec",
+      step1_desc: "Izpolnite naš obrazec za vlogo v nekaj minutah s svojimi osebnimi podatki in podrobnostmi projekta.",
+      step2: "Preverjanje Datoteke",
+      step2_desc: "Naš strokovni tim pregleda vašo datoteko in vas kontaktira v 24 urah z odgovorom.",
+      step3: "Prejmite Sredstva",
+      step3_desc: "Po odobritvi se sredstva neposredno prenesejo na vaš račun v 2-3 delovnih dneh.",
+    },
+    form: {
+      title: "Zahteva za Financiranje",
+      subtitle: "Izpolnite spodnji obrazec, da pošljete svojo prošnjo",
+      fullName: "Polno Ime",
+      email: "Naslov E-pošte",
+      phone: "Telefonska Številka",
+      country: "Država Bivanja",
+      address: "Naslov",
+      occupation: "Poklic / Zaposlitev",
+      monthlyIncome: "Mesečni Dohodek (€)",
+      loanAmount: "Želeni Znesek (€)",
+      loanType: "Vrsta Financiranja",
+      duration: "Želena Doba Odplačevanja",
+      months: "mesecev",
+      years: "let",
+      reason: "Razlog / Opis Projekta",
+      submit: "Pošlji Mojo Prošnjo",
+      required: "Obvezno polje",
+    },
+    footer: {
+      quickLinks: "Hitre Povezave",
+      company: "BNF FINANCE",
+      legal: "Pravno Obvestilo",
+      privacy: "Politika Zasebnosti",
+      terms: "Pogoji Uporabe",
+      copyright: "© 2024 BNF FINANCE. Vse pravice pridržane.",
+    },
+  },
+  sk: {
+    nav: {
+      home: "Domov",
+      about: "O Nás",
+      contact: "Kontakt",
+      form: "Žiadosť",
+    },
+    hero: {
+      title: "Váš spoľahlivý partner pre všetky vaše finančné projekty",
+      subtitle: "Získajte prístup k flexibilným a rýchlym finančným riešeniam prispôsobeným vašim potrebám",
+      cta: "Podajte Žiadosť Teraz",
+    },
+    services: {
+      title: "Naše Služby",
+      subtitle: "Komplexné finančné riešenia pre všetky vaše projekty",
+      personal: {
+        title: "Osobný Úver",
+        description: "Získajte až 500 000 € na vaše osobné projekty s konkurenčnými úrokovými sadzbami a zjednodušeným procesom.",
+      },
+      real_estate: {
+        title: "Hypotekárny Úver",
+        description: "Financujte nákup alebo renováciu svojej nehnuteľnosti s výhodnými podmienkami a osobnou podporou.",
+      },
+      business: {
+        title: "Podnikateľský/Profesionálny Úver",
+        description: "Špecializované finančné riešenia pre MSP a podnikateľov s odbornosťou a spoľahlivými partnermi.",
+      },
+      auto: {
+        title: "Autolúčka",
+        description: "Financujte nákup svojho vozidla s atraktívnymi úrokovými sadzbami a rýchlym, transparentným procesom.",
+      },
+      student: {
+        title: "Študentský Úver",
+        description: "Financujte svoje štúdium s podmienkami prispôsobenými študentom a flexibilnými podmienkami splácania.",
+      },
+      other: {
+        title: "Ďalšie Riešenia",
+        description: "Objavte naše ďalšie finančné riešenia prispôsobené vašim špecifickým potrebám.",
+      },
+    },
+    stats: {
+      clients: "spokojných klientov",
+      experience: "rokov skúseností",
+      approval: "miera schválenia",
+      countries: "pokrytých krajín",
+    },
+    testimonials: {
+      title: "Recenzie Našich Klientov",
+      subtitle: "Objavte, ako sme pomohli našim klientom realizovať ich projekty",
+    },
+    process: {
+      title: "Ako To Funguje",
+      subtitle: "Jednoduchý a transparentný proces v 3 krokoch",
+      step1: "Vyplňte Formulár",
+      step1_desc: "Vyplňte náš formulár žiadosti za pár minút so svojimi osobnými údajmi a podrobnosťami projektu.",
+      step2: "Overenie Súboru",
+      step2_desc: "Náš tím odborníkov skúma váš súbor a kontaktuje vás do 24 hodín s odpoveďou.",
+      step3: "Prijmite Finančné Prostriedky",
+      step3_desc: "Po schválení sa finančné prostriedky prevedú priamo na váš účet do 2-3 pracovných dní.",
+    },
+    form: {
+      title: "Žiadosť o Financovanie",
+      subtitle: "Vyplňte nižšie uvedený formulár a odošlite svoju žiadosť",
+      fullName: "Celé Meno",
+      email: "Emailová Adresa",
+      phone: "Telefónne Číslo",
+      country: "Krajina Pobytu",
+      address: "Adresa",
+      occupation: "Povolanie / Zamestnanie",
+      monthlyIncome: "Mesačný Príjem (€)",
+      loanAmount: "Požadovaná Suma (€)",
+      loanType: "Typ Financovania",
+      duration: "Požadovaná Doba Splácania",
+      months: "mesiacov",
+      years: "rokov",
+      reason: "Dôvod / Popis Projektu",
+      submit: "Odoslať Moju Žiadosť",
+      required: "Povinné pole",
+    },
+    footer: {
+      quickLinks: "Rýchle Odkazy",
+      company: "BNF FINANCE",
+      legal: "Právne Upozornenie",
+      privacy: "Zásady Ochrany Osobných Údajov",
+      terms: "Podmienky Používania",
+      copyright: "© 2024 BNF FINANCE. Všetky práva vyhradené.",
+    },
+  },
+};
+
+// Testimonials avec noms moins populaires
+export const TESTIMONIALS = {
+  fr: [
+    {
+      initials: "V",
+      name: "Valérie Beaumont",
+      country: "France",
+      amount: "€50,000",
+      quote: "BNF Finance m'a permis de financer mon projet de création d'entreprise en seulement 2 semaines. Équipe très professionnelle et réactive!",
+    },
+    {
+      initials: "R",
+      name: "Roberto Gómez",
+      country: "Espagne",
+      amount: "€75,000",
+      quote: "Excelente servicio. El equipo de BNF Finance fue muy atento y me ayudó a obtener el financiamiento que necesitaba para mi negocio.",
+    },
+    {
+      initials: "H",
+      name: "Helmut Richter",
+      country: "Allemagne",
+      amount: "€120,000",
+      quote: "Sehr professionell und zuverlässig. BNF Finance hat mir geholfen, mein Immobilienprojekt zu finanzieren. Ich kann sie nur empfehlen!",
+    },
+    {
+      initials: "C",
+      name: "Célia Renard",
+      country: "Belgique",
+      amount: "€35,000",
+      quote: "Service rapide et efficace. J'ai reçu mon financement en moins d'un mois. Très satisfaite de mon expérience avec BNF Finance.",
+    },
+    {
+      initials: "L",
+      name: "Lorenzo Benedetti",
+      country: "Italie",
+      amount: "€250,000",
+      quote: "BNF Finance mi ha offerto le migliori condizioni di finanziamento. Sono molto soddisfatto del servizio e della professionalità del team.",
+    },
+    {
+      initials: "I",
+      name: "Ingrid Svensson",
+      country: "Suède",
+      amount: "€500,000",
+      quote: "Mycket nöjd. BNF Finance erbjöd mig finansieringen jag behövde för mitt stora projekt. Rekommenderas!",
+    },
+  ],
+  en: [
+    {
+      initials: "V",
+      name: "Valerie Beaumont",
+      country: "France",
+      amount: "€50,000",
+      quote: "BNF Finance allowed me to finance my business creation project in just 2 weeks. Very professional and responsive team!",
+    },
+    {
+      initials: "R",
+      name: "Roberto Gómez",
+      country: "Spain",
+      amount: "€75,000",
+      quote: "Excellent service. The BNF Finance team was very attentive and helped me get the financing I needed for my business.",
+    },
+    {
+      initials: "H",
+      name: "Helmut Richter",
+      country: "Germany",
+      amount: "€120,000",
+      quote: "Very professional and reliable. BNF Finance helped me finance my real estate project. I can only recommend them!",
+    },
+    {
+      initials: "C",
+      name: "Celia Renard",
+      country: "Belgium",
+      amount: "€35,000",
+      quote: "Fast and efficient service. I received my financing in less than a month. Very satisfied with my experience with BNF Finance.",
+    },
+    {
+      initials: "L",
+      name: "Lorenzo Benedetti",
+      country: "Italy",
+      amount: "€250,000",
+      quote: "BNF Finance offered me the best financing conditions. I am very satisfied with the service and professionalism of the team.",
+    },
+    {
+      initials: "I",
+      name: "Ingrid Svensson",
+      country: "Sweden",
+      amount: "€500,000",
+      quote: "Very satisfied. BNF Finance provided me with the financing I needed for my large project. Highly recommended!",
+    },
+  ],
+};
+
+// Dirigeants avec noms moins populaires
+export const LEADERSHIP = {
+  fr: [
+    { name: "Thierry Leclerc", title: "Directeur Général" },
+    { name: "Martine Rousseau", title: "Directrice Financière" },
+    { name: "Gérard Fontaine", title: "Responsable Opérations" },
+  ],
+  en: [
+    { name: "Thierry Leclerc", title: "Chief Executive Officer" },
+    { name: "Martine Rousseau", title: "Chief Financial Officer" },
+    { name: "Gérard Fontaine", title: "Operations Manager" },
+  ],
 };
