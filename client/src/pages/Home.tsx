@@ -17,63 +17,62 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-white text-slate-900">
-      {/* Hero Section */}
-      <section className="relative pt-32 pb-24 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-white via-blue-50 to-white">
-        <div className="max-w-6xl mx-auto">
-          <div className="grid md:grid-cols-2 gap-12 items-center">
-            <div className="space-y-8">
+      {/* Hero Section with Image */}
+      <section 
+        className="relative w-full min-h-screen md:min-h-[600px] sm:min-h-[500px] flex items-center justify-center overflow-hidden bg-cover bg-center"
+        style={{ 
+          backgroundImage: 'url(https://d2xsxph8kpxj0f.cloudfront.net/310519663674993046/RUbfAp2yeLoeVJzkDmZ4BZ/bnf-hero-banner-4kNKXCdG6rvMWaeSNgSt5r.webp)',
+          backgroundAttachment: 'fixed'
+        }}
+      >
+        <div className="absolute inset-0 bg-black/20"></div>
+        <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 w-full py-16 md:py-0">
+          <div className="flex items-center justify-start h-full">
+            <div className="space-y-6 md:space-y-8 w-full md:w-1/2">
               <div className="space-y-4">
-                <h1 className="text-5xl md:text-6xl font-bold text-slate-900 leading-tight">
+                <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight drop-shadow-lg">
                   {t.hero.title}
                 </h1>
-                <p className="text-xl text-slate-600 leading-relaxed">
+                <p className="text-base sm:text-lg md:text-xl text-white/90 leading-relaxed drop-shadow-md max-w-lg">
                   {t.hero.subtitle}
                 </p>
               </div>
               <Link href="/form">
-                <Button className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-6 text-lg rounded-lg transition-all duration-200 hover:shadow-lg">
+                <Button className="bg-blue-600 hover:bg-blue-700 text-white px-6 sm:px-8 py-3 sm:py-4 md:py-6 text-sm sm:text-base md:text-lg rounded-lg transition-all duration-200 hover:shadow-lg w-fit">
                   {t.hero.cta}
-                  <ChevronRight className="ml-2 w-5 h-5" />
+                  <ChevronRight className="ml-2 w-4 sm:w-5 h-4 sm:h-5" />
                 </Button>
               </Link>
-            </div>
-            <div className="hidden md:block">
-              <div className="bg-gradient-to-br from-blue-100 to-blue-50 rounded-2xl p-12 h-96 flex items-center justify-center">
-                <div className="text-center">
-                  <div className="text-6xl mb-4">💰</div>
-                  <p className="text-slate-600 font-medium">Financement Flexible</p>
-                </div>
-              </div>
             </div>
           </div>
         </div>
       </section>
 
       {/* Services Section */}
-      <section className="py-24 px-4 sm:px-6 lg:px-8 border-t border-slate-200">
+      <section className="py-16 sm:py-20 md:py-24 px-4 sm:px-6 lg:px-8 border-t border-slate-200">
         <div className="max-w-6xl mx-auto">
-          <div className="mb-16 space-y-4">
-            <h2 className="text-4xl md:text-5xl font-bold text-slate-900">
+          <div className="mb-12 sm:mb-16 space-y-4">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-slate-900">
               {t.services.title}
             </h2>
-            <p className="text-xl text-slate-600">
+            <p className="text-base sm:text-lg md:text-xl text-slate-600">
               {t.services.subtitle}
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
             {SERVICES.map((service) => {
               const serviceData = t.services[service.key as "personal" | "real_estate" | "business" | "auto" | "student" | "other"];
               return (
                 <div
                   key={service.key}
-                  className="p-8 border border-slate-200 rounded-xl hover:shadow-lg transition-all duration-300 hover:border-blue-300"
+                  className="p-6 sm:p-8 border border-slate-200 rounded-xl hover:shadow-lg transition-all duration-300 hover:border-blue-300"
                 >
-                  <div className="text-4xl mb-4">{service.icon}</div>
-                  <h3 className="text-xl font-bold text-slate-900 mb-3">
+                  <div className="text-3xl sm:text-4xl mb-4">{service.icon}</div>
+                  <h3 className="text-lg sm:text-xl font-bold text-slate-900 mb-3">
                     {serviceData.title}
                   </h3>
-                  <p className="text-slate-600 leading-relaxed">
+                  <p className="text-sm sm:text-base text-slate-600 leading-relaxed">
                     {serviceData.description}
                   </p>
                 </div>
@@ -84,42 +83,42 @@ export default function Home() {
       </section>
 
       {/* Stats Section */}
-      <section className="py-24 px-4 sm:px-6 lg:px-8 bg-slate-50 border-t border-slate-200">
+      <section className="py-16 sm:py-20 md:py-24 px-4 sm:px-6 lg:px-8 bg-slate-50 border-t border-slate-200">
         <div className="max-w-6xl mx-auto">
-          <div className="grid md:grid-cols-4 gap-8">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8">
             <div className="text-center">
-              <div className="text-5xl font-bold text-blue-600 mb-2">5000+</div>
-              <p className="text-slate-600">{t.stats.clients}</p>
+              <div className="text-3xl sm:text-4xl md:text-5xl font-bold text-blue-600 mb-2">5000+</div>
+              <p className="text-xs sm:text-sm md:text-base text-slate-600">{t.stats.clients}</p>
             </div>
             <div className="text-center">
-              <div className="text-5xl font-bold text-blue-600 mb-2">10+</div>
-              <p className="text-slate-600">{t.stats.experience}</p>
+              <div className="text-3xl sm:text-4xl md:text-5xl font-bold text-blue-600 mb-2">10+</div>
+              <p className="text-xs sm:text-sm md:text-base text-slate-600">{t.stats.experience}</p>
             </div>
             <div className="text-center">
-              <div className="text-5xl font-bold text-blue-600 mb-2">98%</div>
-              <p className="text-slate-600">{t.stats.approval}</p>
+              <div className="text-3xl sm:text-4xl md:text-5xl font-bold text-blue-600 mb-2">98%</div>
+              <p className="text-xs sm:text-sm md:text-base text-slate-600">{t.stats.approval}</p>
             </div>
             <div className="text-center">
-              <div className="text-5xl font-bold text-blue-600 mb-2">15</div>
-              <p className="text-slate-600">{t.stats.countries}</p>
+              <div className="text-3xl sm:text-4xl md:text-5xl font-bold text-blue-600 mb-2">15</div>
+              <p className="text-xs sm:text-sm md:text-base text-slate-600">{t.stats.countries}</p>
             </div>
           </div>
         </div>
       </section>
 
       {/* Testimonials Section */}
-      <section className="py-24 px-4 sm:px-6 lg:px-8 border-t border-slate-200">
+      <section className="py-16 sm:py-20 md:py-24 px-4 sm:px-6 lg:px-8 border-t border-slate-200">
         <div className="max-w-6xl mx-auto">
-          <div className="mb-16 space-y-4">
-            <h2 className="text-4xl md:text-5xl font-bold text-slate-900">
+          <div className="mb-12 sm:mb-16 space-y-4">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-slate-900">
               {t.testimonials.title}
             </h2>
-            <p className="text-xl text-slate-600">
+            <p className="text-base sm:text-lg md:text-xl text-slate-600">
               {t.testimonials.subtitle}
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
             {[
               {
                 initials: "V",
@@ -166,19 +165,19 @@ export default function Home() {
             ].map((testimonial, idx) => (
               <div
                 key={idx}
-                className="p-8 bg-slate-50 rounded-xl border border-slate-200 hover:border-blue-300 transition-all duration-300"
+                className="p-6 sm:p-8 bg-slate-50 rounded-xl border border-slate-200 hover:border-blue-300 transition-all duration-300"
               >
                 <div className="flex items-center mb-4">
-                  <div className="w-12 h-12 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold text-lg">
+                  <div className="w-10 sm:w-12 h-10 sm:h-12 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold text-sm sm:text-lg">
                     {testimonial.initials}
                   </div>
-                  <div className="ml-4">
-                    <p className="font-bold text-slate-900">{testimonial.name}</p>
-                    <p className="text-sm text-slate-600">{testimonial.country}</p>
+                  <div className="ml-3 sm:ml-4">
+                    <p className="font-bold text-sm sm:text-base text-slate-900">{testimonial.name}</p>
+                    <p className="text-xs sm:text-sm text-slate-600">{testimonial.country}</p>
                   </div>
                 </div>
-                <p className="text-slate-600 italic mb-4">"{testimonial.quote}"</p>
-                <p className="text-blue-600 font-bold">{testimonial.amount}</p>
+                <p className="text-xs sm:text-sm md:text-base text-slate-600 italic mb-4">"{testimonial.quote}"</p>
+                <p className="text-sm sm:text-base text-blue-600 font-bold">{testimonial.amount}</p>
               </div>
             ))}
           </div>
@@ -186,30 +185,30 @@ export default function Home() {
       </section>
 
       {/* Process Section */}
-      <section className="py-24 px-4 sm:px-6 lg:px-8 bg-slate-50 border-t border-slate-200">
+      <section className="py-16 sm:py-20 md:py-24 px-4 sm:px-6 lg:px-8 bg-slate-50 border-t border-slate-200">
         <div className="max-w-6xl mx-auto">
-          <div className="mb-16 space-y-4">
-            <h2 className="text-4xl md:text-5xl font-bold text-slate-900">
+          <div className="mb-12 sm:mb-16 space-y-4">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-slate-900">
               {t.process.title}
             </h2>
-            <p className="text-xl text-slate-600">
+            <p className="text-base sm:text-lg md:text-xl text-slate-600">
               {t.process.subtitle}
             </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
             <div className="relative">
               <div className="flex items-start">
                 <div className="flex-shrink-0">
-                  <div className="flex items-center justify-center h-12 w-12 rounded-lg bg-blue-600 text-white font-bold text-lg">
+                  <div className="flex items-center justify-center h-10 sm:h-12 w-10 sm:w-12 rounded-lg bg-blue-600 text-white font-bold text-sm sm:text-lg">
                     1
                   </div>
                 </div>
-                <div className="ml-6">
-                  <h3 className="text-xl font-bold text-slate-900 mb-2">
+                <div className="ml-4 sm:ml-6">
+                  <h3 className="text-base sm:text-lg md:text-xl font-bold text-slate-900 mb-2">
                     {t.process.step1}
                   </h3>
-                  <p className="text-slate-600">
+                  <p className="text-sm sm:text-base text-slate-600">
                     {t.process.step1_desc}
                   </p>
                 </div>
@@ -219,15 +218,15 @@ export default function Home() {
             <div className="relative">
               <div className="flex items-start">
                 <div className="flex-shrink-0">
-                  <div className="flex items-center justify-center h-12 w-12 rounded-lg bg-blue-600 text-white font-bold text-lg">
+                  <div className="flex items-center justify-center h-10 sm:h-12 w-10 sm:w-12 rounded-lg bg-blue-600 text-white font-bold text-sm sm:text-lg">
                     2
                   </div>
                 </div>
-                <div className="ml-6">
-                  <h3 className="text-xl font-bold text-slate-900 mb-2">
+                <div className="ml-4 sm:ml-6">
+                  <h3 className="text-base sm:text-lg md:text-xl font-bold text-slate-900 mb-2">
                     {t.process.step2}
                   </h3>
-                  <p className="text-slate-600">
+                  <p className="text-sm sm:text-base text-slate-600">
                     {t.process.step2_desc}
                   </p>
                 </div>
@@ -237,15 +236,15 @@ export default function Home() {
             <div className="relative">
               <div className="flex items-start">
                 <div className="flex-shrink-0">
-                  <div className="flex items-center justify-center h-12 w-12 rounded-lg bg-blue-600 text-white font-bold text-lg">
+                  <div className="flex items-center justify-center h-10 sm:h-12 w-10 sm:w-12 rounded-lg bg-blue-600 text-white font-bold text-sm sm:text-lg">
                     3
                   </div>
                 </div>
-                <div className="ml-6">
-                  <h3 className="text-xl font-bold text-slate-900 mb-2">
+                <div className="ml-4 sm:ml-6">
+                  <h3 className="text-base sm:text-lg md:text-xl font-bold text-slate-900 mb-2">
                     {t.process.step3}
                   </h3>
-                  <p className="text-slate-600">
+                  <p className="text-sm sm:text-base text-slate-600">
                     {t.process.step3_desc}
                   </p>
                 </div>
@@ -256,18 +255,18 @@ export default function Home() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-24 px-4 sm:px-6 lg:px-8 border-t border-slate-200">
-        <div className="max-w-4xl mx-auto text-center space-y-8">
-          <h2 className="text-4xl md:text-5xl font-bold text-slate-900">
+      <section className="py-16 sm:py-20 md:py-24 px-4 sm:px-6 lg:px-8 border-t border-slate-200">
+        <div className="max-w-4xl mx-auto text-center space-y-6 sm:space-y-8">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-slate-900">
             {t.hero.title}
           </h2>
-          <p className="text-xl text-slate-600">
+          <p className="text-base sm:text-lg md:text-xl text-slate-600">
             {t.hero.subtitle}
           </p>
           <Link href="/form">
-            <Button className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-6 text-lg rounded-lg transition-all duration-200 hover:shadow-lg">
+            <Button className="bg-blue-600 hover:bg-blue-700 text-white px-6 sm:px-8 py-3 sm:py-4 md:py-6 text-sm sm:text-base md:text-lg rounded-lg transition-all duration-200 hover:shadow-lg w-fit mx-auto">
               {t.hero.cta}
-              <ChevronRight className="ml-2 w-5 h-5" />
+              <ChevronRight className="ml-2 w-4 sm:w-5 h-4 sm:h-5" />
             </Button>
           </Link>
         </div>
