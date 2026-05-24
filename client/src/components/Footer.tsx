@@ -1,6 +1,6 @@
 import { useLanguage } from "@/contexts/LanguageContext";
 import { Link } from "wouter";
-import { SITE_NAME, COMPANY_EMAIL, COMPANY_ADDRESS, COMPANY_PHONE } from "@/const";
+import { SITE_NAME, COMPANY_EMAIL, COMPANY_ADDRESS, COMPANY_PHONE, COMPANY_PHONE_2 } from "@/const";
 
 export default function Footer() {
   const { t } = useLanguage();
@@ -70,6 +70,11 @@ export default function Footer() {
               <li>
                 <a href={`tel:${COMPANY_PHONE}`} className="hover:text-white transition-colors">
                   {COMPANY_PHONE}
+                </a>
+              </li>
+              <li>
+                <a href={`tel:${COMPANY_PHONE_2}`} className="hover:text-white transition-colors">
+                  {COMPANY_PHONE_2}
                 </a>
               </li>
             </ul>
