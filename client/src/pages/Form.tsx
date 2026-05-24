@@ -4,6 +4,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { CheckCircle } from "lucide-react";
 import { toast } from "sonner";
 
 const FORMSPREE_ID = "mjgzopzp";
@@ -63,6 +65,7 @@ const PHONE_CODES = [
 export default function Form() {
   const { t } = useLanguage();
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [formData, setFormData] = useState({
     fullName: "",
     email: "",
@@ -116,7 +119,7 @@ export default function Form() {
       });
 
       if (response.ok) {
-        toast.success("Votre demande à été bien envoyé");
+        setShowSuccessModal(true);
         setFormData({
           fullName: "",
           email: "",
@@ -376,6 +379,37 @@ export default function Form() {
           </Button>
         </form>
       </div>
+
+      {/* Success Modal */}
+      <Dialog open={showSuccessModal} onOpenChange={setShowSuccessModal}>
+        <DialogContent className="max-w-md sm:max-w-lg">
+          <DialogHeader className="text-center">
+            <div className="flex justify-center mb-4">
+              <CheckCircle className="w-16 h-16 sm:w-20 sm:h-20 text-green-500" />
+            </div>
+            <DialogTitle className="text-2xl sm:text-3xl font-bold text-center text-slate-900">
+              Demande bien reçue !
+            </DialogTitle>
+          </DialogHeader>
+          <div className="text-center space-y-4 py-6">
+            <p className="text-base sm:text-lg text-slate-600 leading-relaxed">
+              Votre demande de financement a été bien reçue. Nous vous remercions de votre confiance.
+            </p>
+            <p className="text-base sm:text-lg text-slate-600 leading-relaxed">
+              Notre équipe examinera votre demande et vous contactera très bientôt pour discuter des modalités de financement.
+            </p>
+            <p className="text-sm sm:text-base text-slate-500 italic">
+              Veuillez patienter, vous recevrez une réponse dans peu de temps.
+            </p>
+          </div>
+          <Button
+            onClick={() => setShowSuccessModal(false)}
+            className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 text-lg rounded-lg"
+          >
+            Fermer
+          </Button>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }

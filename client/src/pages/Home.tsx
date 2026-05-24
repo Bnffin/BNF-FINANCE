@@ -19,7 +19,7 @@ export default function Home() {
     <div className="min-h-screen bg-white text-slate-900">
       {/* Hero Section with Image */}
       <section 
-        className="relative w-full min-h-screen md:min-h-[600px] sm:min-h-[500px] flex items-center justify-center overflow-hidden bg-cover bg-center"
+        className="relative w-full h-96 sm:h-[450px] md:h-[500px] flex items-center justify-center overflow-hidden bg-cover bg-center"
         style={{ 
           backgroundImage: 'url(https://d2xsxph8kpxj0f.cloudfront.net/310519663674993046/RUbfAp2yeLoeVJzkDmZ4BZ/bnf-hero-banner-4kNKXCdG6rvMWaeSNgSt5r.webp)',
           backgroundAttachment: 'fixed'
