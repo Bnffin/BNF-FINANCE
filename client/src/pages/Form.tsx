@@ -93,22 +93,26 @@ export default function Form() {
     setIsSubmitting(true);
 
     try {
-      const formDataToSend = new FormData();
-      formDataToSend.append("fullName", formData.fullName);
-      formDataToSend.append("email", formData.email);
-      formDataToSend.append("phone", `${formData.phoneCode}${formData.phone}`);
-      formDataToSend.append("country", formData.country);
-      formDataToSend.append("address", formData.address);
-      formDataToSend.append("occupation", formData.occupation);
-      formDataToSend.append("monthlyIncome", formData.monthlyIncome);
-      formDataToSend.append("loanAmount", formData.loanAmount);
-      formDataToSend.append("loanType", formData.loanType);
-      formDataToSend.append("duration", `${formData.duration} ${formData.durationUnit}`);
-      formDataToSend.append("reason", formData.reason);
+      const dataToSend = {
+        fullName: formData.fullName,
+        email: formData.email,
+        phone: `${formData.phoneCode}${formData.phone}`,
+        country: formData.country,
+        address: formData.address,
+        occupation: formData.occupation,
+        monthlyIncome: formData.monthlyIncome,
+        loanAmount: formData.loanAmount,
+        loanType: formData.loanType,
+        duration: `${formData.duration} ${formData.durationUnit}`,
+        reason: formData.reason,
+      };
 
       const response = await fetch(`https://formspree.io/f/mjgzopzp`, {
         method: "POST",
-        body: formDataToSend,
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(dataToSend),
       });
 
       if (response.ok) {
