@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { CheckCircle } from "lucide-react";
+import { CheckCircle, Lock, Zap, Clock } from "lucide-react";
 import { toast } from "sonner";
 
 const FORMSPREE_ID = "mjgzopzp";
@@ -147,238 +147,289 @@ export default function Form() {
   };
 
   return (
-    <div className="min-h-screen bg-white py-8 sm:py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-2xl mx-auto w-full">
-        {/* Header */}
-        <div className="mb-8 sm:mb-12 space-y-3 sm:space-y-4">
-          <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-slate-900">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-emerald-50">
+      {/* Hero Section */}
+      <section className="py-16 sm:py-24 px-4 sm:px-6 lg:px-8 bg-gradient-to-r from-slate-900 to-slate-800">
+        <div className="max-w-4xl mx-auto text-center space-y-6">
+          <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-white" style={{ fontFamily: 'Playfair Display' }}>
             {t.form.title}
           </h1>
-          <p className="text-base sm:text-lg md:text-xl text-slate-600">
-            {t.form.subtitle}
+          <p className="text-lg sm:text-xl text-slate-200 max-w-2xl mx-auto">
+            Remplissez ce formulaire simple et rapide pour obtenir votre financement en moins de 24 heures
           </p>
+          
+          {/* Trust Badges */}
+          <div className="grid grid-cols-3 gap-4 pt-8 max-w-2xl mx-auto">
+            <div className="flex flex-col items-center space-y-2">
+              <Zap className="w-6 h-6 text-emerald-400" />
+              <p className="text-sm text-slate-300">Rapide</p>
+            </div>
+            <div className="flex flex-col items-center space-y-2">
+              <Lock className="w-6 h-6 text-emerald-400" />
+              <p className="text-sm text-slate-300">Sécurisé</p>
+            </div>
+            <div className="flex flex-col items-center space-y-2">
+              <Clock className="w-6 h-6 text-emerald-400" />
+              <p className="text-sm text-slate-300">24h</p>
+            </div>
+          </div>
         </div>
+      </section>
 
-        {/* Form */}
-        <form onSubmit={handleSubmit} className="space-y-5 sm:space-y-6 bg-slate-50 p-4 sm:p-6 md:p-8 rounded-xl border border-slate-200">
-          {/* Full Name */}
-          <div>
-            <label className="block text-xs sm:text-sm font-medium text-slate-900 mb-2">
-              {t.form.fullName} <span className="text-red-500">*</span>
-            </label>
-            <Input
-              type="text"
-              name="fullName"
-              placeholder={t.form.fullName}
-              value={formData.fullName}
-              onChange={handleChange}
-              required
-              className="w-full text-xs sm:text-sm"
-            />
+      {/* Form Section */}
+      <section className="py-16 sm:py-24 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-4xl mx-auto">
+          <div className="bg-white rounded-3xl shadow-2xl p-8 sm:p-12 border border-slate-200">
+            <form onSubmit={handleSubmit} className="space-y-8">
+              {/* Personal Information Section */}
+              <div>
+                <h2 className="text-2xl font-bold text-slate-900 mb-6 flex items-center" style={{ fontFamily: 'Poppins' }}>
+                  <span className="w-8 h-8 bg-emerald-500 text-white rounded-full flex items-center justify-center mr-3 text-sm font-bold">1</span>
+                  Informations Personnelles
+                </h2>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  {/* Full Name */}
+                  <div>
+                    <label className="block text-sm font-semibold text-slate-900 mb-2">
+                      {t.form.fullName} <span className="text-red-500">*</span>
+                    </label>
+                    <Input
+                      type="text"
+                      name="fullName"
+                      placeholder="Jean Dupont"
+                      value={formData.fullName}
+                      onChange={handleChange}
+                      required
+                      className="w-full px-4 py-3 rounded-lg border border-slate-300 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200 transition-all"
+                    />
+                  </div>
+
+                  {/* Email */}
+                  <div>
+                    <label className="block text-sm font-semibold text-slate-900 mb-2">
+                      {t.form.email} <span className="text-red-500">*</span>
+                    </label>
+                    <Input
+                      type="email"
+                      name="email"
+                      placeholder="jean@example.com"
+                      value={formData.email}
+                      onChange={handleChange}
+                      required
+                      className="w-full px-4 py-3 rounded-lg border border-slate-300 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200 transition-all"
+                    />
+                  </div>
+
+                  {/* Phone */}
+                  <div className="md:col-span-2">
+                    <label className="block text-sm font-semibold text-slate-900 mb-2">
+                      {t.form.phone} <span className="text-red-500">*</span>
+                    </label>
+                    <div className="flex gap-3">
+                      <Select value={formData.phoneCode} onValueChange={(value) => handleSelectChange("phoneCode", value)}>
+                        <SelectTrigger className="w-24 px-3 py-3 rounded-lg border border-slate-300 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200">
+                          <SelectValue />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {PHONE_CODES.map((pc) => (
+                            <SelectItem key={pc.code} value={pc.code}>
+                              {pc.code}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                      <Input
+                        type="tel"
+                        name="phone"
+                        placeholder="612345678"
+                        value={formData.phone}
+                        onChange={handleChange}
+                        required
+                        className="flex-1 px-4 py-3 rounded-lg border border-slate-300 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200 transition-all"
+                      />
+                    </div>
+                  </div>
+
+                  {/* Country */}
+                  <div>
+                    <label className="block text-sm font-semibold text-slate-900 mb-2">
+                      {t.form.country} <span className="text-red-500">*</span>
+                    </label>
+                    <Select value={formData.country} onValueChange={(value) => handleSelectChange("country", value)}>
+                      <SelectTrigger className="w-full px-4 py-3 rounded-lg border border-slate-300 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200">
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {COUNTRIES.map((country) => (
+                          <SelectItem key={country} value={country}>
+                            {country}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
+
+                  {/* Address */}
+                  <div>
+                    <label className="block text-sm font-semibold text-slate-900 mb-2">
+                      {t.form.address} <span className="text-red-500">*</span>
+                    </label>
+                    <Input
+                      type="text"
+                      name="address"
+                      placeholder="123 Rue de la Paix"
+                      value={formData.address}
+                      onChange={handleChange}
+                      required
+                      className="w-full px-4 py-3 rounded-lg border border-slate-300 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200 transition-all"
+                    />
+                  </div>
+
+                  {/* Occupation */}
+                  <div>
+                    <label className="block text-sm font-semibold text-slate-900 mb-2">
+                      {t.form.occupation} <span className="text-red-500">*</span>
+                    </label>
+                    <Input
+                      type="text"
+                      name="occupation"
+                      placeholder="Ingénieur"
+                      value={formData.occupation}
+                      onChange={handleChange}
+                      required
+                      className="w-full px-4 py-3 rounded-lg border border-slate-300 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200 transition-all"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              {/* Financial Information Section */}
+              <div className="border-t pt-8">
+                <h2 className="text-2xl font-bold text-slate-900 mb-6 flex items-center" style={{ fontFamily: 'Poppins' }}>
+                  <span className="w-8 h-8 bg-emerald-500 text-white rounded-full flex items-center justify-center mr-3 text-sm font-bold">2</span>
+                  Informations Financières
+                </h2>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  {/* Monthly Income */}
+                  <div>
+                    <label className="block text-sm font-semibold text-slate-900 mb-2">
+                      {t.form.monthlyIncome} <span className="text-red-500">*</span>
+                    </label>
+                    <Input
+                      type="number"
+                      name="monthlyIncome"
+                      placeholder="5000"
+                      value={formData.monthlyIncome}
+                      onChange={handleChange}
+                      required
+                      className="w-full px-4 py-3 rounded-lg border border-slate-300 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200 transition-all"
+                    />
+                  </div>
+
+                  {/* Loan Amount */}
+                  <div>
+                    <label className="block text-sm font-semibold text-slate-900 mb-2">
+                      {t.form.loanAmount} <span className="text-red-500">*</span>
+                    </label>
+                    <Input
+                      type="number"
+                      name="loanAmount"
+                      placeholder="50000"
+                      value={formData.loanAmount}
+                      onChange={handleChange}
+                      required
+                      className="w-full px-4 py-3 rounded-lg border border-slate-300 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200 transition-all"
+                    />
+                  </div>
+
+                  {/* Loan Type */}
+                  <div>
+                    <label className="block text-sm font-semibold text-slate-900 mb-2">
+                      {t.form.loanType} <span className="text-red-500">*</span>
+                    </label>
+                    <Select value={formData.loanType} onValueChange={(value) => handleSelectChange("loanType", value)}>
+                      <SelectTrigger className="w-full px-4 py-3 rounded-lg border border-slate-300 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200">
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="personal">{t.services.personal.title}</SelectItem>
+                        <SelectItem value="real_estate">{t.services.real_estate.title}</SelectItem>
+                        <SelectItem value="business">{t.services.business.title}</SelectItem>
+                        <SelectItem value="auto">{t.services.auto.title}</SelectItem>
+                        <SelectItem value="student">{t.services.student.title}</SelectItem>
+                        <SelectItem value="other">{t.services.other.title}</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+
+                  {/* Duration */}
+                  <div>
+                    <label className="block text-sm font-semibold text-slate-900 mb-2">
+                      {t.form.duration} <span className="text-red-500">*</span>
+                    </label>
+                    <div className="flex gap-3">
+                      <Input
+                        type="number"
+                        name="duration"
+                        placeholder="12"
+                        value={formData.duration}
+                        onChange={handleChange}
+                        required
+                        className="flex-1 px-4 py-3 rounded-lg border border-slate-300 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200 transition-all"
+                      />
+                      <Select value={formData.durationUnit} onValueChange={(value) => handleSelectChange("durationUnit", value)}>
+                        <SelectTrigger className="w-32 px-3 py-3 rounded-lg border border-slate-300 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200">
+                          <SelectValue />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="months">Mois</SelectItem>
+                          <SelectItem value="years">Ans</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Project Details Section */}
+              <div className="border-t pt-8">
+                <h2 className="text-2xl font-bold text-slate-900 mb-6 flex items-center" style={{ fontFamily: 'Poppins' }}>
+                  <span className="w-8 h-8 bg-emerald-500 text-white rounded-full flex items-center justify-center mr-3 text-sm font-bold">3</span>
+                  Détails du Projet
+                </h2>
+                <div>
+                  <label className="block text-sm font-semibold text-slate-900 mb-2">
+                    {t.form.reason} <span className="text-red-500">*</span>
+                  </label>
+                  <Textarea
+                    name="reason"
+                    placeholder="Décrivez votre projet et vos objectifs..."
+                    value={formData.reason}
+                    onChange={handleChange}
+                    required
+                    rows={5}
+                    className="w-full px-4 py-3 rounded-lg border border-slate-300 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200 transition-all resize-none"
+                  />
+                </div>
+              </div>
+
+              {/* Submit Button */}
+              <div className="border-t pt-8">
+                <Button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="w-full bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700 text-white py-4 text-lg rounded-lg transition-all duration-300 hover:shadow-2xl hover:scale-105 disabled:opacity-50 font-bold"
+                >
+                  {isSubmitting ? "Envoi en cours..." : t.form.submit}
+                </Button>
+                <p className="text-center text-sm text-slate-600 mt-4">
+                  ✓ Vos données sont sécurisées et confidentielles
+                </p>
+              </div>
+            </form>
           </div>
-
-          {/* Email */}
-          <div>
-            <label className="block text-xs sm:text-sm font-medium text-slate-900 mb-2">
-              {t.form.email} <span className="text-red-500">*</span>
-            </label>
-            <Input
-              type="email"
-              name="email"
-              placeholder={t.form.email}
-              value={formData.email}
-              onChange={handleChange}
-              required
-              className="w-full text-xs sm:text-sm"
-            />
-          </div>
-
-          {/* Phone */}
-          <div>
-            <label className="block text-xs sm:text-sm font-medium text-slate-900 mb-2">
-              {t.form.phone} <span className="text-red-500">*</span>
-            </label>
-            <div className="flex gap-2 flex-col sm:flex-row">
-              <Select value={formData.phoneCode} onValueChange={(value) => handleSelectChange("phoneCode", value)}>
-                <SelectTrigger className="w-full sm:w-24">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  {PHONE_CODES.map((code) => (
-                    <SelectItem key={code.code} value={code.code}>
-                      {code.code}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-              <Input
-                type="tel"
-                name="phone"
-                placeholder="123456789"
-                value={formData.phone}
-                onChange={handleChange}
-                required
-                className="flex-1 min-w-0"
-              />
-            </div>
-          </div>
-
-          {/* Country */}
-          <div>
-            <label className="block text-xs sm:text-sm font-medium text-slate-900 mb-2">
-              {t.form.country} <span className="text-red-500">*</span>
-            </label>
-            <Select value={formData.country} onValueChange={(value) => handleSelectChange("country", value)}>
-              <SelectTrigger>
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                {COUNTRIES.map((country) => (
-                  <SelectItem key={country} value={country}>
-                    {country}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
-
-          {/* Address */}
-          <div>
-            <label className="block text-xs sm:text-sm font-medium text-slate-900 mb-2">
-              {t.form.address} <span className="text-red-500">*</span>
-            </label>
-            <Input
-              type="text"
-              name="address"
-              placeholder={t.form.address}
-              value={formData.address}
-              onChange={handleChange}
-              required
-              className="w-full text-xs sm:text-sm"
-            />
-          </div>
-
-          {/* Occupation */}
-          <div>
-            <label className="block text-xs sm:text-sm font-medium text-slate-900 mb-2">
-              {t.form.occupation} <span className="text-red-500">*</span>
-            </label>
-            <Input
-              type="text"
-              name="occupation"
-              placeholder={t.form.occupation}
-              value={formData.occupation}
-              onChange={handleChange}
-              required
-              className="w-full text-xs sm:text-sm"
-            />
-          </div>
-
-          {/* Monthly Income */}
-          <div>
-            <label className="block text-xs sm:text-sm font-medium text-slate-900 mb-2">
-              {t.form.monthlyIncome} <span className="text-red-500">*</span>
-            </label>
-            <Input
-              type="number"
-              name="monthlyIncome"
-              placeholder="5000"
-              value={formData.monthlyIncome}
-              onChange={handleChange}
-              required
-              className="w-full text-xs sm:text-sm"
-            />
-          </div>
-
-          {/* Loan Amount */}
-          <div>
-            <label className="block text-xs sm:text-sm font-medium text-slate-900 mb-2">
-              {t.form.loanAmount} <span className="text-red-500">*</span>
-            </label>
-            <Input
-              type="number"
-              name="loanAmount"
-              placeholder="50000"
-              value={formData.loanAmount}
-              onChange={handleChange}
-              required
-              className="w-full text-xs sm:text-sm"
-            />
-          </div>
-
-          {/* Loan Type */}
-          <div>
-            <label className="block text-xs sm:text-sm font-medium text-slate-900 mb-2">
-              {t.form.loanType} <span className="text-red-500">*</span>
-            </label>
-            <Select value={formData.loanType} onValueChange={(value) => handleSelectChange("loanType", value)}>
-              <SelectTrigger>
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="personal">{t.services.personal.title}</SelectItem>
-                <SelectItem value="real_estate">{t.services.real_estate.title}</SelectItem>
-                <SelectItem value="business">{t.services.business.title}</SelectItem>
-                <SelectItem value="auto">{t.services.auto.title}</SelectItem>
-                <SelectItem value="student">{t.services.student.title}</SelectItem>
-                <SelectItem value="other">{t.services.other.title}</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-
-          {/* Duration */}
-          <div>
-            <label className="block text-xs sm:text-sm font-medium text-slate-900 mb-2">
-              {t.form.duration} <span className="text-red-500">*</span>
-            </label>
-            <div className="flex gap-2 flex-col sm:flex-row">
-              <Input
-                type="number"
-                name="duration"
-                placeholder="12"
-                value={formData.duration}
-                onChange={handleChange}
-                required
-                className="flex-1 min-w-0"
-              />
-              <Select value={formData.durationUnit} onValueChange={(value) => handleSelectChange("durationUnit", value)}>
-                <SelectTrigger className="w-full sm:w-32">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="months">{t.form.months}</SelectItem>
-                  <SelectItem value="years">{t.form.years}</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-          </div>
-
-          {/* Reason */}
-          <div>
-            <label className="block text-xs sm:text-sm font-medium text-slate-900 mb-2">
-              {t.form.reason} <span className="text-red-500">*</span>
-            </label>
-            <Textarea
-              name="reason"
-              placeholder={t.form.reason}
-              value={formData.reason}
-              onChange={handleChange}
-              required
-              rows={5}
-              className="w-full text-xs sm:text-sm"
-            />
-          </div>
-
-          {/* Submit Button */}
-          <Button
-            type="submit"
-            disabled={isSubmitting}
-            className="w-full bg-blue-600 hover:bg-blue-700 text-white py-6 text-lg rounded-lg transition-all duration-200 hover:shadow-lg disabled:opacity-50"
-          >
-            {isSubmitting ? "Envoi en cours..." : t.form.submit}
-          </Button>
-        </form>
-      </div>
+        </div>
+      </section>
 
       {/* Success Modal */}
       <Dialog open={showSuccessModal} onOpenChange={setShowSuccessModal}>
@@ -404,7 +455,7 @@ export default function Form() {
           </div>
           <Button
             onClick={() => setShowSuccessModal(false)}
-            className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 text-lg rounded-lg"
+            className="w-full bg-emerald-600 hover:bg-emerald-700 text-white py-3 text-lg rounded-lg"
           >
             Fermer
           </Button>
