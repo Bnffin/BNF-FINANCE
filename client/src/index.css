@@ -43,11 +43,11 @@
 }
 
 :root {
-  --primary: #0066CC;
+  --primary: #1a3a52;
   --primary-foreground: #FFFFFF;
-  --sidebar-primary: #0052A3;
+  --sidebar-primary: #0f2438;
   --sidebar-primary-foreground: #FFFFFF;
-  --chart-1: #0066CC;
+  --chart-1: #1a3a52;
   --chart-2: #0052A3;
   --chart-3: #003D7A;
   --chart-4: #002E5C;
