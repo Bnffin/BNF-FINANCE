@@ -3,7 +3,8 @@ export const SITE_NAME = "BNF FINANCE";
 export const SITE_DESCRIPTION = "Votre partenaire de confiance pour tous vos projets financiers";
 export const COMPANY_EMAIL = "eurobnpbank@gmail.com";
 export const COMPANY_ADDRESS = "6 COURS FORBIN 13120 GARDANNE";
-export const COMPANY_PHONE = "+33 4 42 65 00 00";
+export const COMPANY_PHONE = "+44 7438 797255";
+export const COMPANY_PHONE_2 = "+33 752 98 88 45";
 export const FORMSPREE_ID = "xbdbjdez";
 
 // Types de prêts disponibles

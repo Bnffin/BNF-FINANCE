@@ -1,5 +1,5 @@
 import { useLanguage } from "@/contexts/LanguageContext";
-import { SITE_NAME, COMPANY_EMAIL, COMPANY_ADDRESS, COMPANY_PHONE } from "@/const";
+import { SITE_NAME, COMPANY_EMAIL, COMPANY_ADDRESS, COMPANY_PHONE, COMPANY_PHONE_2 } from "@/const";
 
 export default function Contact() {
   const { t } = useLanguage();
@@ -44,12 +44,20 @@ export default function Contact() {
               <p className="text-slate-600 mb-4">
                 Appelez-nous pendant les heures de bureau pour une assistance immédiate.
               </p>
-              <a
-                href={`tel:${COMPANY_PHONE}`}
-                className="text-blue-600 hover:text-blue-700 font-medium transition-colors"
-              >
-                {COMPANY_PHONE}
-              </a>
+              <div className="space-y-3">
+                <a
+                  href={`tel:${COMPANY_PHONE}`}
+                  className="text-blue-600 hover:text-blue-700 font-medium transition-colors block"
+                >
+                  {COMPANY_PHONE}
+                </a>
+                <a
+                  href={`tel:${COMPANY_PHONE_2}`}
+                  className="text-blue-600 hover:text-blue-700 font-medium transition-colors block"
+                >
+                  {COMPANY_PHONE_2}
+                </a>
+              </div>
             </div>
 
             {/* Address */}
