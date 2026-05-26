@@ -29,8 +29,12 @@ jobs:
     - name: Build project
       run: pnpm build
 
+    - name: List dist contents
+      run: ls -la dist/
+
     - name: Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v3
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         publish_dir: ./dist
+        cname: bnf-finance.github.io
