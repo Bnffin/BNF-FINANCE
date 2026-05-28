@@ -203,10 +203,17 @@ function vitePluginStorageProxy(): Plugin {
   };
 }
 
-const plugins = [react(), tailwindcss(), jsxLocPlugin(), vitePluginManusRuntime(), vitePluginManusDebugCollector(), vitePluginStorageProxy()];
+const plugins = [
+  react(),
+  tailwindcss(),
+  jsxLocPlugin(),
+  vitePluginManusRuntime(),
+  // Désactiver les plugins Manus en production (Vercel)
+  ...(process.env.NODE_ENV !== "production" ? [vitePluginManusDebugCollector(), vitePluginStorageProxy()] : []),
+];
 
 export default defineConfig({
-  base: process.env.NODE_ENV === "production" ? "/BNF-FINANCE/" : "/",
+  base: "/",
   plugins,
   resolve: {
     alias: {

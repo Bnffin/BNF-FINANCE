@@ -15,7 +15,7 @@ import Footer from "./components/Footer";
 function Router() {
   return (
     <Switch>
-      <Route path={"\\"} component={Home} />
+      <Route path="/" component={Home} />
       <Route path={"/about"} component={About} />
       <Route path={"/contact"} component={Contact} />
       <Route path={"/form"} component={Form} />
